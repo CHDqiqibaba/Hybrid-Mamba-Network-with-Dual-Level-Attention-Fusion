@@ -42,27 +42,6 @@ The proposed framework integrates CT imaging and clinical data using a Hybrid-Ma
 
 # 📁 Repository Structure
 
-
----
-
-# 📦 Installation
-
-```bash
-conda create -n mamba-copd python=3.10
-conda activate mamba-copd
-pip install -r requirements.txt
-
-# 📦 Dependencies include:
-torch>=2.1
-numpy
-scikit-learn
-opencv-python
-matplotlib
-pydicom
-
-
-# 📂 Dataset Description
-
 Hybrid-Mamba-COPD/
 │
 ├── data/
@@ -88,6 +67,23 @@ Hybrid-Mamba-COPD/
 │
 ├── requirements.txt # Package dependencies
 └── README.md
+
+# 📦 Installation
+```bash
+conda create -n mamba-copd python=3.10
+conda activate mamba-copd
+pip install -r requirements.txt
+
+# 📦 Dependencies include:
+torch>=2.1
+numpy
+scikit-learn
+opencv-python
+matplotlib
+pydicom
+
+
+# 📂 Dataset Description
 
 ## CT Data
 - 30 uniform slices per subject  
