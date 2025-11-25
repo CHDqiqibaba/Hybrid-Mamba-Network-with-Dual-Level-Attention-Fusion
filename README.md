@@ -40,41 +40,43 @@ The proposed framework integrates CT imaging and clinical data using a Hybrid-Ma
 
 ---
 
-# 📁 Repository Structure
+## 📁 Repository Structure
 
+```
 Hybrid-Mamba-COPD/
 │
 ├── data/
-│ ├── ct/ # CT slices
-│ ├── clinical.csv # Clinical variables
-│ └── splits/ # Train/val/test split indices
+│   ├── ct/                    # CT slices
+│   ├── clinical.csv           # Clinical variables
+│   └── splits/                # Train/val/test split indices
 │
 ├── models/
-│ ├── mamba_backbone.py # Hybrid Mamba backbone
-│ ├── mseb.py # Multi-scale SE block
-│ ├── dwconv_aas.py # Hybrid-DWConv-AAS block
-│ ├── fusion_module.py # Cross-modal fusion
-│ └── classifier.py # Final classifier
+│   ├── mamba_backbone.py      # Hybrid Mamba backbone
+│   ├── mseb.py                # Multi-scale SE block
+│   ├── dwconv_aas.py          # Hybrid-DWConv-AAS block
+│   ├── fusion_module.py       # Cross-modal fusion
+│   └── classifier.py          # Final classifier
 │
 ├── utils/
-│ ├── metrics.py # AUC, precision, recall, F1
-│ ├── dataset.py # Dataset loader
-│ └── cam.py # CAM visualization
+│   ├── metrics.py             # AUC, precision, recall, F1
+│   ├── dataset.py             # Dataset loader
+│   └── cam.py                 # CAM visualization
 │
-├── train.py # Training pipeline
-├── test.py # Evaluation script
-├── predict_single.py # Single case inference
+├── train.py                   # Training pipeline
+├── test.py                    # Evaluation script
+├── predict_single.py          # Single case inference
 │
-├── requirements.txt # Package dependencies
+├── requirements.txt           # Package dependencies
 └── README.md
+```
 
-# 📦 Installation
+## 📦 Installation
 ```bash
 conda create -n mamba-copd python=3.10
 conda activate mamba-copd
 pip install -r requirements.txt
 
-# 📦 Dependencies include:
+## 📦 Dependencies include:
 torch>=2.1
 numpy
 scikit-learn
@@ -83,28 +85,28 @@ matplotlib
 pydicom
 
 
-# 📂 Dataset Description
+## 📂 Dataset Description
 
-## CT Data
+### CT Data
 - 30 uniform slices per subject  
 - Lung windowing and segmentation  
 - Standard preprocessing  
 
-## Clinical Data
+### Clinical Data
 - Demographic information  
 - Pulmonary function  
 - Blood gas and laboratory indicators  
 - Random Forest feature selection  
 
 
-# 🧪 Experimental Setup
+## 🧪 Experimental Setup
 - Train / Validation / Test split: **70% / 10% / 20%**
 - Within train + validation:
   - **5-fold cross-test**
 - Early stopping enabled
 - 30 slices used as CT input
 
-# 🧪 Training
+## 🧪 Training
 python train.py \
     --data ./data \
     --batch 16 \
