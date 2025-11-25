@@ -1,99 +1,118 @@
-# Hybrid-Mamba-Network-with-Dual-Level-Attention-Fusion
-This repository contains the official implementation of:A Hybrid-Mamba Network with Dual Level Attention Fusion for Multimodal COPD Diagnosis
+# Hybrid-Mamba Network for Multimodal COPD Diagnosis
 
-This work proposes a Hybrid-Mamba architecture that integrates CT imaging and clinical data, achieving high diagnostic accuracy, robustness, and inference efficiency for COPD classification.
+This repository contains the official implementation of:
 
-Highlights
+**A Hybrid-Mamba Network with Dual Level Attention Fusion for Multimodal COPD Diagnosis**
 
-First application of Mamba-based modeling in multimodal COPD diagnosis
+The proposed framework integrates CT imaging and clinical data using a Hybrid-Mamba backbone, achieving accurate, efficient, and robust COPD classification.
 
-Hybrid backbone combining convolution, Mamba state-space modeling, and attention
+---
 
-Dual-Level Attention Fusion for adaptive integration of CT and clinical data
+## 🚀 Highlights
 
-Efficient inference (≈97.5 ms per patient) with strong robustness
+- Hybrid architecture combining convolution, Mamba state-space modeling, and attention
+- Dual-Level Attention Fusion for integrating CT and clinical variables
+- Computationally efficient (≈97.5 ms per patient)
+- Strong diagnostic performance and robustness under perturbations
+- Supports interpretability through CAM visualization
 
-Supports capacitated feature extraction, multimodal fusion, and interpretability (CAM)
+---
 
-Network Overview
+## 🧠 Network Overview
 
-The framework consists of:
+### 1. CT Feature Extraction
+- Mamba-powered encoder with:
+  - Multi-Scale Squeeze-and-Excitation Block (MSEB)
+  - Hybrid-DWConv-AAS Block
+  - Axial-Attention Block
 
-1️⃣ CT Feature Extraction
+### 2. Clinical Feature Encoding
+- Random forest feature selection  
+- Standardization and fully connected embedding
 
-Hybrid Mamba backbone with four stages:
+### 3. Multimodal Fusion
+- Dual-Level Attention Fusion Block  
+- Cascaded self-attention + cross-attention  
+- Adaptive weighting of imaging and clinical sources
 
-Multi-Scale Squeeze-and-Excitation Block (MSEB)
+### 4. Interpretability
+- Class activation maps (CAM) for regional visualization
 
-Hybrid-DWConv-AAS Block
+---
 
-Axial-Attention Block
+## 📁 Repository Structure
 
-Captures both local textures & long-range dependencies
 
-2️⃣ Clinical Feature Extraction
+---
 
-Random Forest feature selection
+## 📦 Installation
 
-Standardization and FC encoding
-
-3️⃣ Multimodal Fusion
-
-Dual-Level Attention Fusion Block:
-
-Slice-level self-attention aggregation
-
-Cross-modal fusion with gated weighting
-
-4️⃣ CAM Visualization
-
-Generates interpretable heatmaps to highlight pathological CT regions
-
-Repository Structure
-Hybrid-Mamba-COPD/
-│
-├── data/
-│   ├── ct/                      # Preprocessed CT slices
-│   ├── clinical.csv             # Clinical feature table
-│   └── splits/                  # Train/val/test index files
-│
-├── models/
-│   ├── mamba_backbone.py        # Hybrid Mamba + axial attention backbone
-│   ├── mseb.py                  # Multi-scale SE block
-│   ├── dwconv_aas.py            # Hybrid-DWConv-AAS block
-│   ├── fusion_module.py         # Dual-level attention fusion
-│   └── classifier.py
-│
-├── train.py                     # Training entry
-├── test.py                      # Evaluation entry
-├── predict_single.py            # Inference on individual patients
-│
-├── utils/
-│   ├── metrics.py               # AUC, precision, recall, F1
-│   ├── dataset.py               # CT + clinical dataset loader
-│   └── cam.py                   # CAM generation
-│
-├── requirements.txt
-└── README.md
-
-Installation
-
+```bash
 conda create -n mamba-copd python=3.10
 conda activate mamba-copd
 pip install -r requirements.txt
 
-training
+## 📦 Dependencies include:
+torch>=2.1
+numpy
+scikit-learn
+opencv-python
+matplotlib
+pydicom
+
+
+## 📂 Dataset Description
+Hybrid-Mamba-COPD/
+│
+├── data/
+│ ├── ct/ # CT slices
+│ ├── clinical.csv # Clinical variables
+│ └── splits/ # Train/val/test split indices
+│
+├── models/
+│ ├── mamba_backbone.py # Hybrid Mamba backbone
+│ ├── mseb.py # Multi-scale SE block
+│ ├── dwconv_aas.py # Hybrid-DWConv-AAS block
+│ ├── fusion_module.py # Cross-modal fusion
+│ └── classifier.py # Final classifier
+│
+├── utils/
+│ ├── metrics.py # AUC, precision, recall, F1
+│ ├── dataset.py # Dataset loader
+│ └── cam.py # CAM visualization
+│
+├── train.py # Training pipeline
+├── test.py # Evaluation script
+├── predict_single.py # Single case inference
+│
+├── requirements.txt # Package dependencies
+└── README.md
+
+### CT Data
+- 30 uniform slices per subject  
+- Lung windowing and segmentation  
+- Standard preprocessing  
+
+### Clinical Data
+- Demographic information  
+- Pulmonary function  
+- Blood gas and laboratory indicators  
+- Random Forest feature selection  
+
+
+## 🧪 Experimental Setup
+- Train / Validation / Test split: **70% / 10% / 20%**
+- Within train + validation:
+  - **5-fold cross-test**
+- Early stopping enabled
+- 30 slices used as CT input
+
+## 🧪 Training
 python train.py \
     --data ./data \
     --batch 16 \
     --lr 1e-4 \
     --folds 5
 
-Default Settings
-
-Train/Val/Test split: 7 : 1 : 2
-5-fold cross-validation within train+val
-Early stopping enabled
-
-Testing
+## 🧪 Evaluation
 python test.py --data ./data --weights checkpoint.pth
